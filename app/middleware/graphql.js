@@ -5,6 +5,7 @@ const { graphqlKoa, graphiqlKoa } = require('apollo-server-koa');
 module.exports = (_, app) => {
   const options = app.config.graphql;
   const graphQLRouter = options.router;
+  const moreOpts = options.moreOpts || {};
   let graphiql = true;
 
   if (options.graphiql === false) {
@@ -28,6 +29,7 @@ module.exports = (_, app) => {
       return graphqlKoa({
         schema: app.schema,
         context: ctx,
+        ...moreOpts
       })(ctx);
     }
     await next();
